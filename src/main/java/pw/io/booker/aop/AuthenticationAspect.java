@@ -6,9 +6,10 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Component;
+import org.apache.log4j.Logger;
+
 
 import pw.io.booker.exception.BookingException;
 import pw.io.booker.repo.AuthenticationRepository;
@@ -17,7 +18,7 @@ import pw.io.booker.repo.AuthenticationRepository;
 @Component
 public class AuthenticationAspect {
 
-	Logger logger = LoggerFactory.getLogger(this.getClass());
+	Logger logger = Logger.getLogger(AuthenticationAspect.class);
 
 	private AuthenticationRepository authenticationRepository;
 
@@ -29,7 +30,6 @@ public class AuthenticationAspect {
 	@Before("execution(* pw.io.booker.controller..*(..))")
 	public void beforeController(JoinPoint joinPoint) {
 
-		System.out.println("This happened before!");
 		logger.info("This happened before!");
 
 	}
@@ -37,7 +37,6 @@ public class AuthenticationAspect {
 	@After("execution(* pw.io.booker.controller..*(..))")
 	public void afterController(JoinPoint joinPoint) {
 
-		System.out.println("This happened after!");
 		logger.info("This happened after!");
 
 	}
@@ -55,7 +54,7 @@ public class AuthenticationAspect {
 		if (authenticationRepository.findByToken(tokenID) == null) {
 
 			logger.error("Please input a token ID!");
-			throw new BookingException("Invalid credentials!");
+			throw new BookingException("Please input a token ID!");
 
 		}
 

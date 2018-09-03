@@ -65,9 +65,7 @@ public class AuthenticationController {
 	
 	@PostMapping("/logout")
 	public String customerLogout(@RequestHeader("tokenID") String tokenID) {
-		
-		System.out.println("Inside customerLogout!");
-		
+				
 		if(authenticationRepository.findByToken(tokenID) != null) {
 			
 			authenticationRepository.delete(authenticationRepository.findByToken(tokenID));
